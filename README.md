@@ -3,7 +3,7 @@
 **Train your ability to remember names and faces — the most useful memory skill in real life.**
 
 A clean, free, open-source web app that helps you deliberately practice associating faces with names.  
-Fully customizable, privacy-first, and ready for different languages and cultures.
+Fully customizable, privacy-first, installable as a PWA, and ready for different languages and cultures.
 
 ---
 
@@ -24,134 +24,144 @@ Everything runs 100% in your browser. No accounts, no tracking, no cloud storage
 
 ## How it works
 
-1. **Settings screen** — choose how hard you want the training to be.
-2. **Memorize phase** — you see a set of faces with names (above or under the photo).
-3. **Recall phase** — the names disappear. You try to write (or select) the correct name for each face.
-4. **Results** — see your score and try again.
+1. **Settings** — choose difficulty (or use a quick preset).
+2. **Memorize** — study faces with names (optional countdown).
+3. **Recall** — type or select the name for each face.
+4. **Results** — score, mistakes review, optional “practice mistakes” round.
+5. **Stats** — local history, streak, averages (export/import anytime).
 
 ---
 
-## Features & Customization
+## Features
 
-### Core Training Loop
-- Show generated faces + names
-- Memorize them
-- Recall by typing or selecting names
+### Core training
+- Generated faces + curated first-name datasets
+- Free-text or dropdown recall
+- Shuffle after memorize, layout (tiles / column), name position
+- Optional timer (total or per-face) with progress bar
+- First-letter hints for easier practice
+- Practice only the faces you missed
 
-### Full Control Over Difficulty & Style
+### Progress (local only)
+- Session history with sparkline trend
+- Daily streak, best score, overall accuracy
+- Export / import JSON; clear anytime
 
-| Setting | Options | Description |
-|---------|---------|-------------|
-| **Number of people** | Slider 2 – 30 | How many faces you want to memorize |
-| **Name regions** | American · West EU · East EU | Toggle which name datasets to use (multi-select supported) |
-| **Gender** | Male · Female · All | Filter faces by sex (default: All) |
-| **Layout** | Column · Tiles (grid) | How faces are displayed |
-| **Name position** | Above image · Under image | Where the name appears during memorization |
-| **Shuffle after memorize** | On · Off | Whether faces change order in the recall phase |
-| **Timer** | Custom duration + Show/Hide | Optional countdown. When time is up → automatic switch to recall |
-| **Input method** | Free text · Dropdown | Choose before starting: type the name or select from list |
+### UX & accessibility
+- Dark / light theme (system-aware)
+- EN · DE · UA · PL localization
+- Keyboard shortcuts: `Esc` leave · `M` ready · `C` check
+- Screen-reader announcements, focus management
+- Toast notifications instead of blocking alerts
+- Offline-ready app shell (PWA); face images need network
 
-### Localization (ready)
-- English (EN)
-- German (DE)
-- Ukrainian (UA)
-- Polish (PL)
-
-The app is pre-structured for easy translation. Language selector will be available.
+### Privacy & security
+- No accounts, no analytics
+- `localStorage` only for settings, theme, language, stats
+- Content-Security-Policy on the document
+- Safe DOM construction for dynamic UI
 
 ---
 
-## Tech Stack & Philosophy
+## Quick start
 
-**Stack (v1)**  
-- Pure **Vanilla HTML + CSS + JavaScript**  
-- No frameworks, no build tools required  
-- Extremely lightweight and easy to contribute to  
+```bash
+git clone https://github.com/maxeleron/name-face-memory-training.git
+cd name-face-memory-training
+```
 
-**Key principles**
-- Privacy first — everything stays in the browser (localStorage only)
-- Offline-friendly design
-- Modular code so new features and languages are easy to add
-- Open source and free forever
+**Option A — open directly**  
+Open `index.html` in a modern browser (modules require a local server in some browsers).
 
-### Planned project structure
+**Option B — local server (recommended)**
+
+```bash
+npm start
+# → http://localhost:5173
+```
+
+No install required for the app itself (`npm start` only pulls a static server).
+
+---
+
+## Development
+
+```bash
+npm test              # unit tests (Node)
+npm run check:locales # ensure locale key parity with en.json
+npm start             # static server on :5173
+```
+
+### Project structure
+
 ```
 name-face-memory-training/
 ├── index.html
-├── css/
-│   └── style.css
+├── favicon.svg
+├── manifest.webmanifest
+├── sw.js                 # service worker (shell cache)
+├── css/style.css
 ├── js/
-│   ├── app.js
-│   ├── settings.js
-│   ├── game.js
-│   ├── data.js
+│   ├── boot.js           # pre-module theme (no FOUC)
+│   ├── app.js            # wiring / screens
+│   ├── game.js           # memorize → recall → results
+│   ├── data.js           # names + face URLs
+│   ├── settings.js       # form + presets
+│   ├── stats.js          # local progress
 │   ├── i18n.js
+│   ├── theme.js
+│   ├── toast.js
+│   ├── announce.js
 │   └── utils.js
-├── data/
-│   ├── names/
-│   │   ├── american.json
-│   │   ├── west-eu.json
-│   │   └── east-eu.json
-│   └── faces/                  # or loaded via free AI-face API
-├── locales/
-│   ├── en.json
-│   ├── de.json
-│   ├── ua.json
-│   └── pl.json
-└── README.md
+├── data/names/           # american, west-eu, east-eu
+├── locales/              # en, de, ua, pl
+├── tests/
+└── scripts/check-locales.js
 ```
 
-### Data Sources
-- **Faces**: AI-generated realistic faces (free sources such as Generated.photos / 100k-faces style APIs or a small local pack). Fully synthetic → no privacy or copyright issues.
-- **Names**: Curated popular first names by region (American, Western European, Eastern European) based on public open datasets (CC0).
+### Data sources
+- **Faces**: [randomuser.me](https://randomuser.me) portrait CDN (synthetic-style stock photos). Offline shell still works; new faces need network. Failed images fall back to initials avatars.
+- **Names**: Curated popular first names by region (public/open-style lists).
 
 ---
 
-## Getting Started
+## Tech stack & principles
 
-1. Clone the repository
-   ```bash
-   git clone https://github.com/maxeleron/name-face-memory-training.git
-   cd name-face-memory-training
-   ```
-
-2. Open `index.html` in your browser  
-   (or use any local server: `npx serve .` / Live Server, etc.)
-
-That’s it. No installation, no dependencies.
+- Pure **Vanilla HTML + CSS + JavaScript** (ES modules)
+- No frameworks, no bundler required
+- PWA: web app manifest + service worker
+- Privacy first, offline-friendly shell, modular code
 
 ---
 
-## Roadmap (ideas)
+## Roadmap
 
-- [x] Core concept & full customization options defined
-- [ ] Basic working prototype (vanilla JS)
-- [ ] Name datasets for American / West EU / East EU
-- [ ] Localization files (EN, DE, UA, PL)
-- [ ] Timer + show/hide option
-- [ ] Free-text + dropdown input modes
-- [ ] Beautiful, modern, mobile-first UI
-- [ ] Progress statistics (localStorage)
-- [ ] Spaced repetition mode
-- [ ] Personal photo upload (local only)
-- [ ] Dark / Light theme
-- [ ] PWA support (installable + offline)
+- [x] Core training loop + full settings
+- [x] Name datasets (American / West EU / East EU)
+- [x] Localization (EN, DE, UA, PL)
+- [x] Timer + free-text / dropdown modes
+- [x] Dark / light theme
+- [x] Progress statistics (localStorage)
+- [x] Practice-mistakes mode
+- [x] Difficulty presets
+- [x] PWA (installable + offline shell)
+- [x] Unit tests + locale checker
+- [ ] Spaced-repetition long-term schedule
+- [ ] Optional personal photo upload (local only)
+- [ ] More name regions / datasets
 
 ---
 
 ## Contributing
 
-Contributions are very welcome!
+Contributions are very welcome:
 
-Ideas that help a lot:
-- Better name lists
-- More realistic face sources
-- Translations
-- UI/UX improvements
-- Accessibility
+- Better name lists and translations
+- Accessibility and UX polish
 - New training modes
+- Face-source improvements (still privacy-safe)
 
-Just open an issue or pull request.
+Open an issue or pull request.
 
 ---
 
@@ -159,9 +169,3 @@ Just open an issue or pull request.
 
 GNU General Public License v3.0  
 See [LICENSE](LICENSE) for details.
-
----
-
-**Made for people who want to get better at remembering names — one face at a time.**
-
-Feel free to star the repo if you find it useful! ⭐

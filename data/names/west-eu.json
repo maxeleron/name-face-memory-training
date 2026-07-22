@@ -1,0 +1,33 @@
+{
+  "male": [
+    "Pierre", "Jean", "Luc", "Antoine", "Hugo", "Louis", "Gabriel", "Arthur",
+    "Jules", "Lucas", "Nathan", "Théo", "Raphaël", "Enzo", "Noah", "Liam",
+    "Hans", "Klaus", "Wolfgang", "Thomas", "Stefan", "Michael", "Andreas",
+    "Christian", "Markus", "Sebastian", "Tobias", "Felix", "Lukas", "Jonas",
+    "Marco", "Luca", "Alessandro", "Matteo", "Lorenzo", "Francesco", "Andrea",
+    "Giovanni", "Riccardo", "Davide", "Carlos", "Diego", "Javier", "Pablo",
+    "Miguel", "Alejandro", "Daniel", "Sergio", "Álvaro", "Manuel",
+    "Willem", "Jan", "Pieter", "Bram", "Daan", "Sem", "Finn", "Luuk",
+    "Oliver", "Harry", "George", "Jack", "Charlie", "Oscar", "Henry", "Leo",
+    "Erik", "Lars", "Nils", "Magnus", "Sven", "Björn", "Oskar", "Emil",
+    "Rui", "Tiago", "João", "Pedro", "Bruno", "Gonçalo", "Diogo", "Miguel",
+    "Seán", "Conor", "Cian", "Oisín", "Liam", "Finn", "Aidan", "Declan",
+    "Nikolaus", "Friedrich", "Heinrich", "Matthias", "Philipp", "Maximilian"
+  ],
+  "female": [
+    "Marie", "Sophie", "Camille", "Léa", "Chloé", "Manon", "Emma", "Inès",
+    "Jade", "Louise", "Alice", "Lina", "Zoé", "Juliette", "Clara", "Anaïs",
+    "Anna", "Maria", "Laura", "Julia", "Sarah", "Lena", "Leonie", "Hannah",
+    "Mia", "Emma", "Sofia", "Emilia", "Luisa", "Amelie", "Greta", "Johanna",
+    "Giulia", "Sofia", "Aurora", "Ginevra", "Alice", "Beatrice", "Chiara",
+    "Francesca", "Valentina", "Martina", "Elena", "Lucia", "Sara", "Emma",
+    "Lucía", "María", "Paula", "Sofía", "Martina", "Daniela", "Carmen",
+    "Isabel", "Ana", "Carla", "Valeria", "Claudia", "Natalia", "Alba",
+    "Emma", "Tess", "Sophie", "Julia", "Lotte", "Noa", "Sara", "Eva",
+    "Olivia", "Amelia", "Isla", "Ava", "Mia", "Emily", "Isabella", "Poppy",
+    "Astrid", "Ingrid", "Freja", "Maja", "Elin", "Saga", "Alva", "Linnea",
+    "Inês", "Mariana", "Beatriz", "Matilde", "Carolina", "Ana", "Francisca",
+    "Siobhán", "Aoife", "Niamh", "Saoirse", "Ciara", "Maeve", "Orla", "Róisín",
+    "Helene", "Katharina", "Elisabeth", "Theresa", "Franziska", "Antonia"
+  ]
+}

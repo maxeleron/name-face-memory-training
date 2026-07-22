@@ -1,0 +1,21 @@
+{
+  "name": "Name-Face Memory Training",
+  "short_name": "NameFace",
+  "description": "Train your ability to remember names and faces. Privacy-first, fully client-side.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0c1017",
+  "theme_color": "#0c1017",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "games"]
+}

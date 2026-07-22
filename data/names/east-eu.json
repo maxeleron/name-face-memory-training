@@ -1,0 +1,37 @@
+{
+  "male": [
+    "Ivan", "Oleksandr", "Andriy", "Dmytro", "Serhiy", "Mykola", "Volodymyr",
+    "Yuriy", "Bohdan", "Taras", "Maksym", "Artem", "Denys", "Roman", "Pavlo",
+    "Piotr", "Krzysztof", "Andrzej", "Tomasz", "Jan", "Paweł", "Michał",
+    "Marcin", "Jakub", "Adam", "Mateusz", "Łukasz", "Bartosz", "Kamil", "Dawid",
+    "Jan", "Petr", "Pavel", "Tomáš", "Martin", "Jakub", "Lukáš", "Ondřej",
+    "David", "Michal", "Josef", "Marek", "Adam", "Filip", "Václav",
+    "János", "László", "István", "Zoltán", "Gábor", "Péter", "Tamás",
+    "Attila", "Ferenc", "Balázs", "Dániel", "Máté", "Bence", "Ádám",
+    "Ion", "Gheorghe", "Vasile", "Alexandru", "Nicolae", "Mihai", "Andrei",
+    "Cristian", "Daniel", "Marian", "Florin", "Adrian", "Radu", "Bogdan",
+    "Nikola", "Petar", "Ivan", "Georgi", "Dimitar", "Stefan", "Todor",
+    "Aleksandar", "Hristo", "Kaloyan", "Martin", "Viktor", "Boris",
+    "Miloš", "Nikola", "Marko", "Stefan", "Luka", "Dušan", "Nemanja",
+    "Aleksandar", "Jovan", "Milan", "Vladimir", "Petar", "Igor", "Darko",
+    "Marek", "Ján", "Peter", "Martin", "Tomáš", "Michal", "Lukáš", "Juraj"
+  ],
+  "female": [
+    "Olena", "Natalia", "Olha", "Iryna", "Tetiana", "Svitlana", "Yulia",
+    "Kateryna", "Anna", "Mariya", "Viktoriya", "Anastasiya", "Oksana", "Halyna",
+    "Anna", "Maria", "Katarzyna", "Małgorzata", "Agnieszka", "Barbara",
+    "Ewa", "Krystyna", "Magdalena", "Elżbieta", "Joanna", "Aleksandra",
+    "Monika", "Natalia", "Karolina", "Paulina", "Zuzanna", "Julia",
+    "Eva", "Anna", "Jana", "Marie", "Hana", "Petra", "Kateřina", "Lucie",
+    "Lenka", "Martina", "Tereza", "Veronika", "Alena", "Markéta", "Barbora",
+    "Mária", "Erzsébet", "Katalin", "Ilona", "Éva", "Anna", "Zsuzsanna",
+    "Judit", "Ágnes", "Andrea", "Krisztina", "Eszter", "Réka", "Dóra",
+    "Maria", "Elena", "Ioana", "Andreea", "Alexandra", "Ana", "Cristina",
+    "Mihaela", "Gabriela", "Daniela", "Alina", "Raluca", "Diana", "Simona",
+    "Maria", "Elena", "Ivanka", "Georgi", "Yordanka", "Desislava", "Petya",
+    "Silvia", "Viktoria", "Nikol", "Gergana", "Radostina", "Tsvetelina",
+    "Jelena", "Milica", "Ana", "Marija", "Jovana", "Ivana", "Teodora",
+    "Katarina", "Aleksandra", "Sofija", "Nina", "Tamara", "Anđela", "Sara",
+    "Zuzana", "Martina", "Jana", "Lucia", "Katarína", "Petra", "Monika", "Eva"
+  ]
+}

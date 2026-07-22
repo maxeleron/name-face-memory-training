@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Train your ability to remember names and faces. Privacy-first, fully client-side memory training app." />
+  <meta name="theme-color" content="#0c1017" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://randomuser.me; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self';" />
+  <title>Name-Face Memory Training</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="favicon.svg" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/boot.js"></script>
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="header">
+      <div class="header__brand">
+        <span class="header__logo" aria-hidden="true">◎</span>
+        <div>
+          <h1 class="header__title" data-i18n="appTitle">Name-Face Memory</h1>
+          <p class="header__tagline" data-i18n="appTagline">Train the skill that matters most</p>
+        </div>
+      </div>
+      <div class="header__actions">
+        <button type="button" id="statsBtn" class="btn btn--icon" data-i18n-aria="stats" data-i18n-title-only="stats" title="Stats" aria-label="Stats">
+          <span aria-hidden="true">📊</span>
+        </button>
+        <label class="sr-only" for="langSelect" data-i18n="language">Language</label>
+        <select id="langSelect" class="select select--sm" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="de">DE</option>
+          <option value="ua">UA</option>
+          <option value="pl">PL</option>
+        </select>
+        <button type="button" id="themeToggle" class="btn btn--icon" data-i18n-aria="toggleTheme" data-i18n-title-only="toggleTheme" aria-label="Toggle theme" title="Toggle theme">
+          <span class="theme-icon theme-icon--dark" aria-hidden="true">☾</span>
+          <span class="theme-icon theme-icon--light" aria-hidden="true">☀</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <!-- SETTINGS SCREEN -->
+      <section id="screen-settings" class="screen screen--active" aria-labelledby="settingsHeading">
+        <div class="screen__header">
+          <h2 id="settingsHeading" data-i18n="settingsTitle" tabindex="-1">Training Settings</h2>
+          <p class="screen__subtitle" data-i18n="settingsSubtitle">Customize your session, then start training.</p>
+        </div>
+
+        <form id="settingsForm" class="settings-form" novalidate>
+          <!-- Presets -->
+          <div class="presets card setting-card--wide">
+            <p class="card__title" data-i18n="presets">Quick presets</p>
+            <div class="presets__row" role="group" aria-label="Difficulty presets">
+              <button type="button" class="preset-btn" data-preset="easy" data-i18n="preset_easy">Easy</button>
+              <button type="button" class="preset-btn" data-preset="medium" data-i18n="preset_medium">Medium</button>
+              <button type="button" class="preset-btn" data-preset="hard" data-i18n="preset_hard">Hard</button>
+              <button type="button" class="preset-btn" data-preset="expert" data-i18n="preset_expert">Expert</button>
+            </div>
+          </div>
+
+          <div class="settings-grid">
+            <!-- Number of people -->
+            <fieldset class="card setting-card">
+              <legend class="card__title" data-i18n="numPeople">Number of people</legend>
+              <div class="slider-row">
+                <input
+                  type="range"
+                  id="numPeople"
+                  name="numPeople"
+                  min="2"
+                  max="30"
+                  value="8"
+                  class="slider"
+                />
+                <output id="numPeopleValue" class="slider-value" for="numPeople">8</output>
+              </div>
+              <div class="slider-labels">
+                <span>2</span>
+                <span>30</span>
+              </div>
+            </fieldset>
+
+            <!-- Name regions -->
+            <fieldset class="card setting-card">
+              <legend class="card__title" data-i18n="nameRegions">Name regions</legend>
+              <p class="card__hint" data-i18n="nameRegionsHint">Select at least one</p>
+              <div class="toggle-group" role="group" aria-label="Name regions">
+                <label class="chip-toggle">
+                  <input type="checkbox" name="regions" value="american" checked />
+                  <span data-i18n="regionAmerican">American</span>
+                </label>
+                <label class="chip-toggle">
+                  <input type="checkbox" name="regions" value="west-eu" checked />
+                  <span data-i18n="regionWestEu">West EU</span>
+                </label>
+                <label class="chip-toggle">
+                  <input type="checkbox" name="regions" value="east-eu" />
+                  <span data-i18n="regionEastEu">East EU</span>
+                </label>
+              </div>
+              <p id="regionsError" class="field-error" hidden data-i18n="regionsError">Select at least one region.</p>
+            </fieldset>
+
+            <!-- Gender -->
+            <fieldset class="card setting-card">
+              <legend class="card__title" data-i18n="gender">Gender</legend>
+              <div class="segmented" role="radiogroup" aria-label="Gender filter">
+                <label class="segmented__option">
+                  <input type="radio" name="gender" value="all" checked />
+                  <span data-i18n="genderAll">All</span>
+                </label>
+                <label class="segmented__option">
+                  <input type="radio" name="gender" value="male" />
+                  <span data-i18n="genderMale">Male</span>
+                </label>
+                <label class="segmented__option">
+                  <input type="radio" name="gender" value="female" />
+                  <span data-i18n="genderFemale">Female</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <!-- Layout -->
+            <fieldset class="card setting-card">
+              <legend class="card__title" data-i18n="layout">Layout</legend>
+              <div class="segmented" role="radiogroup" aria-label="Layout">
+                <label class="segmented__option">
+                  <input type="radio" name="layout" value="column" />
+                  <span data-i18n="layoutColumn">Column</span>
+                </label>
+                <label class="segmented__option">
+                  <input type="radio" name="layout" value="tiles" checked />
+                  <span data-i18n="layoutTiles">Tiles</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <!-- Name position -->
+            <fieldset class="card setting-card">
+              <legend class="card__title" data-i18n="namePosition">Name position</legend>
+              <div class="segmented" role="radiogroup" aria-label="Name position">
+                <label class="segmented__option">
+                  <input type="radio" name="namePosition" value="above" />
+                  <span data-i18n="nameAbove">Above</span>
+                </label>
+                <label class="segmented__option">
+                  <input type="radio" name="namePosition" value="under" checked />
+                  <span data-i18n="nameUnder">Under</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <!-- Shuffle -->
+            <fieldset class="card setting-card">
+              <legend class="card__title" data-i18n="shuffle">Shuffle after memorize</legend>
+              <label class="switch">
+                <input type="checkbox" id="shuffle" name="shuffle" checked />
+                <span class="switch__track" aria-hidden="true"></span>
+                <span class="switch__label">
+                  <span class="switch__on" data-i18n="on">On</span>
+                  <span class="switch__off" data-i18n="off">Off</span>
+                </span>
+              </label>
+            </fieldset>
+
+            <!-- Timer -->
+            <fieldset class="card setting-card setting-card--wide">
+              <legend class="card__title" data-i18n="timer">Timer</legend>
+              <div class="timer-settings">
+                <label class="switch">
+                  <input type="checkbox" id="timerEnabled" name="timerEnabled" />
+                  <span class="switch__track" aria-hidden="true"></span>
+                  <span class="switch__label" data-i18n="timerEnable">Enable countdown</span>
+                </label>
+
+                <div id="timerOptions" class="timer-options" hidden>
+                  <div class="field-row">
+                    <label class="field-label" for="timerMode" data-i18n="timerMode">Mode</label>
+                    <select id="timerMode" name="timerMode" class="select">
+                      <option value="total" data-i18n="timerTotal">Total seconds</option>
+                      <option value="perFace" data-i18n="timerPerFace">Seconds per face</option>
+                    </select>
+                  </div>
+                  <div class="field-row">
+                    <label class="field-label" for="timerSeconds" data-i18n="timerSeconds">Seconds</label>
+                    <input
+                      type="number"
+                      id="timerSeconds"
+                      name="timerSeconds"
+                      class="input"
+                      min="1"
+                      max="600"
+                      value="30"
+                    />
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="timerVisible" name="timerVisible" checked />
+                    <span class="switch__track" aria-hidden="true"></span>
+                    <span class="switch__label" data-i18n="timerShowUi">Show timer UI</span>
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- Input method -->
+            <fieldset class="card setting-card">
+              <legend class="card__title" data-i18n="inputMethod">Input method</legend>
+              <div class="segmented segmented--wide" role="radiogroup" aria-label="Input method">
+                <label class="segmented__option">
+                  <input type="radio" name="inputMethod" value="text" checked />
+                  <span data-i18n="inputText">Free text</span>
+                </label>
+                <label class="segmented__option">
+                  <input type="radio" name="inputMethod" value="dropdown" />
+                  <span data-i18n="inputDropdown">Dropdown</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <!-- Hints -->
+            <fieldset class="card setting-card">
+              <legend class="card__title" data-i18n="hints">First-letter hints</legend>
+              <label class="switch">
+                <input type="checkbox" id="hintsEnabled" name="hintsEnabled" />
+                <span class="switch__track" aria-hidden="true"></span>
+                <span class="switch__label" data-i18n="hintsEnable">Show first letter during recall</span>
+              </label>
+            </fieldset>
+
+            <!-- Confirm leave -->
+            <fieldset class="card setting-card setting-card--wide">
+              <legend class="card__title" data-i18n="moreOptions">More options</legend>
+              <label class="switch">
+                <input type="checkbox" id="confirmLeave" name="confirmLeave" checked />
+                <span class="switch__track" aria-hidden="true"></span>
+                <span class="switch__label" data-i18n="confirmLeaveLabel">Confirm leave mid-session</span>
+              </label>
+              <p class="card__hint card__hint--spaced" data-i18n="shortcutsHint">Shortcuts: Esc leave · M ready · C check</p>
+            </fieldset>
+          </div>
+
+          <div class="settings-actions">
+            <button type="submit" id="startBtn" class="btn btn--primary btn--lg">
+              <span data-i18n="startTraining">Start Training</span>
+              <span class="btn__arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- MEMORIZE SCREEN -->
+      <section id="screen-memorize" class="screen" aria-labelledby="memorizeHeading" hidden>
+        <div class="timer-progress" aria-hidden="true">
+          <div id="timerProgressBar" class="timer-progress__bar"></div>
+        </div>
+        <div class="screen__header screen__header--row">
+          <div>
+            <h2 id="memorizeHeading" data-i18n="memorizeTitle" tabindex="-1">Memorize</h2>
+            <p class="screen__subtitle" data-i18n="memorizeSubtitle">Study each face and name carefully.</p>
+          </div>
+          <div id="timerDisplay" class="timer-display" hidden>
+            <span class="timer-display__label" data-i18n="timeLeft">Time left</span>
+            <span id="timerCountdown" class="timer-display__value">0:00</span>
+          </div>
+        </div>
+
+        <div id="memorizeGrid" class="face-grid" role="list"></div>
+
+        <div class="screen__footer">
+          <button type="button" id="readyBtn" class="btn btn--primary btn--lg">
+            <span data-i18n="imReady">I'm ready — Start Recall</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- RECALL SCREEN -->
+      <section id="screen-recall" class="screen" aria-labelledby="recallHeading" hidden>
+        <div class="screen__header">
+          <h2 id="recallHeading" data-i18n="recallTitle" tabindex="-1">Recall</h2>
+          <p class="screen__subtitle" data-i18n="recallSubtitle">Enter the name for each face.</p>
+        </div>
+
+        <div id="recallGrid" class="face-grid" role="list"></div>
+
+        <div class="screen__footer">
+          <button type="button" id="checkBtn" class="btn btn--primary btn--lg">
+            <span data-i18n="checkAnswers">Check Answers</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- RESULTS SCREEN -->
+      <section id="screen-results" class="screen" aria-labelledby="resultsHeading" hidden>
+        <div class="screen__header">
+          <h2 id="resultsHeading" data-i18n="resultsTitle" tabindex="-1">Results</h2>
+          <p class="screen__subtitle" data-i18n="resultsSubtitle">Here's how you did.</p>
+          <p id="sessionMeta" class="session-meta" hidden></p>
+        </div>
+
+        <div class="results-score card">
+          <div class="results-score__ring" id="scoreRing" aria-hidden="true">
+            <svg viewBox="0 0 120 120">
+              <circle class="ring-bg" cx="60" cy="60" r="52" />
+              <circle class="ring-fg" id="scoreRingFg" cx="60" cy="60" r="52" />
+            </svg>
+            <div class="results-score__pct">
+              <span id="scorePercent">0</span><span class="results-score__unit">%</span>
+            </div>
+          </div>
+          <div class="results-score__meta">
+            <p class="results-score__label" data-i18n="yourScore">Your score</p>
+            <p class="results-score__fraction">
+              <strong id="scoreCorrect">0</strong>
+              <span data-i18n="outOf">out of</span>
+              <strong id="scoreTotal">0</strong>
+            </p>
+            <p id="scoreMessage" class="results-score__message"></p>
+          </div>
+        </div>
+
+        <div id="mistakesSection" class="mistakes card" hidden>
+          <h3 class="card__title" data-i18n="mistakesTitle">Mistakes</h3>
+          <ul id="mistakesList" class="mistakes__list"></ul>
+        </div>
+
+        <div class="results-actions">
+          <button type="button" id="practiceMistakesBtn" class="btn btn--ghost btn--lg" hidden>
+            <span data-i18n="practiceMistakes">Practice mistakes</span>
+          </button>
+          <button type="button" id="playAgainBtn" class="btn btn--primary btn--lg">
+            <span data-i18n="playAgain">Play Again (same settings)</span>
+          </button>
+          <button type="button" id="changeSettingsBtn" class="btn btn--ghost btn--lg">
+            <span data-i18n="changeSettings">Change Settings</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- STATS SCREEN -->
+      <section id="screen-stats" class="screen" aria-labelledby="statsHeading" hidden>
+        <div class="screen__header">
+          <h2 id="statsHeading" data-i18n="statsTitle" tabindex="-1">Your Progress</h2>
+          <p class="screen__subtitle" data-i18n="statsSubtitle">All data stays on this device.</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="card stat-card">
+            <p class="stat-card__label" data-i18n="statsSessions">Sessions</p>
+            <p class="stat-card__value" id="statSessions">0</p>
+          </div>
+          <div class="card stat-card">
+            <p class="stat-card__label" data-i18n="statsAvg">Average</p>
+            <p class="stat-card__value" id="statAvg">0%</p>
+          </div>
+          <div class="card stat-card">
+            <p class="stat-card__label" data-i18n="statsBest">Best</p>
+            <p class="stat-card__value" id="statBest">0%</p>
+          </div>
+          <div class="card stat-card">
+            <p class="stat-card__label" data-i18n="statsStreak">Streak</p>
+            <p class="stat-card__value" id="statStreak">0</p>
+          </div>
+          <div class="card stat-card">
+            <p class="stat-card__label" data-i18n="statsBestStreak">Best streak</p>
+            <p class="stat-card__value" id="statBestStreak">0</p>
+          </div>
+          <div class="card stat-card">
+            <p class="stat-card__label" data-i18n="statsAccuracy">Accuracy</p>
+            <p class="stat-card__value" id="statAccuracy">0%</p>
+          </div>
+          <div class="card stat-card">
+            <p class="stat-card__label" data-i18n="statsFaces">Faces trained</p>
+            <p class="stat-card__value" id="statFaces">0</p>
+          </div>
+          <div class="card stat-card">
+            <p class="stat-card__label" data-i18n="statsLast5">Last 5 avg</p>
+            <p class="stat-card__value" id="statLast5">0%</p>
+          </div>
+        </div>
+
+        <div class="card stats-chart">
+          <svg id="statsSparkline" class="sparkline" viewBox="0 0 280 56" width="100%" height="56" role="img" aria-label="Score trend"></svg>
+        </div>
+
+        <div class="card stats-history-card">
+          <h3 class="card__title" data-i18n="statsHistory">Recent sessions</h3>
+          <ul id="statsHistory" class="stats-history"></ul>
+        </div>
+
+        <div class="stats-actions">
+          <button type="button" id="exportStatsBtn" class="btn btn--ghost" data-i18n="exportStats">Export</button>
+          <button type="button" id="importStatsBtn" class="btn btn--ghost" data-i18n="importStats">Import</button>
+          <input type="file" id="importStatsFile" accept="application/json,.json" hidden />
+          <button type="button" id="clearStatsBtn" class="btn btn--ghost btn--danger" data-i18n="clearStats">Clear stats</button>
+          <button type="button" id="statsBackBtn" class="btn btn--primary" data-i18n="statsBack">Back to settings</button>
+        </div>
+      </section>
+
+      <!-- Loading overlay -->
+      <div id="loadingOverlay" class="loading-overlay" hidden role="status" aria-live="polite" aria-busy="false">
+        <div class="loading-overlay__content">
+          <div class="spinner" aria-hidden="true"></div>
+          <p data-i18n="loading">Preparing faces…</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p data-i18n="footer">100% client-side · Privacy-first · No accounts</p>
+    </footer>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
