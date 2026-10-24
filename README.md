@@ -87,7 +87,6 @@ No install required for the app itself (`npm start` only pulls a static server).
 ## Development
 
 ```bash
-npm test              # unit tests (Node)
 npm run check:locales # ensure locale key parity with en.json
 npm start             # static server on :5173
 ```
@@ -115,7 +114,6 @@ name-face-memory-training/
 │   └── utils.js
 ├── data/names/           # american, west-eu, east-eu
 ├── locales/              # en, de, ua, pl
-├── tests/
 └── scripts/check-locales.js
 ```
 
@@ -145,7 +143,7 @@ name-face-memory-training/
 - [x] Practice-mistakes mode
 - [x] Difficulty presets
 - [x] PWA (installable + offline shell)
-- [x] Unit tests + locale checker
+- [x] Locale checker
 - [ ] Spaced-repetition long-term schedule
 - [ ] Optional personal photo upload (local only)
 - [ ] More name regions / datasets
